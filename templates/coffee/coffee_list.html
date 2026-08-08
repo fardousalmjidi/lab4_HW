@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load coffee_filters %}
+
+{% block title %}أصناف القهوة والفروع{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1>قائمة محامص وأصناف القهوة المحلية</h1>
+    </div>
+
+    <!-- نموذج الفلتر والبحث المتكامل -->
+    <form method="GET" action="" class="filter-form">
+        <input type="text" name="q" value="{{ query }}" placeholder="ابحث باسم القهوة، الفرع، أو درجة التحميص...">
+        <button type="submit">بحث وتصفية</button>
+        {% if query %}
+            <a href="." class="filter-form button reset-btn" style="padding: 12px 18px; color: white; border-radius: 6px; font-size: 14px;">إلغاء البحث</a>
+        {% endif %}
+    </form>
+
+    {% for item in coffees %}
+        <div class="coffee-card">
+            <div class="coffee-info">
+                <h3>{{ item.name }}</h3>
+                <p>الفرع: <span class="badge">{{ item.branch_name }}</span> &nbsp;|&nbsp; التحميص: {{ item.roast_level }}</p>
+            </div>
+            <div>
+                <span class="price">{{ item.price|coffee_tag }}</span>
+            </div>
+        </div>
+    {% empty %}
+        <div class="empty-msg">
+            <p>لا توجد أصناف قهوة مطابقة لبحثك أو مسجلة حالياً في قاعدة البيانات.</p>
+        </div>
+    {% endfor %}
+    <!-- الفلتر المميز في أسفل الصفحة -->
+    <div class="coffee-footer">
+        <p>{{ "شكراً لزيارتك نظام إدارة القهوة"|coffee_footer_msg }}</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+{% load coffee_filters %}
+
+{% block branding %}
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding-left: 20px;">
+    <h1 id="site-name" style="margin: 0;">
+        <a href="{% url 'admin:index' %}" style="color: #fff; text-decoration: none; font-size: 20px;">☕ نظام إدارة القهوة - لوحة التحكم</a>
+    </h1>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="{% url 'coffee_list' %}" style="background: #6f4e37; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-size: 14px; font-family: Tahoma, sans-serif; border: 1px solid #c8ad7f; transition: background 0.3s;">☕ العودة لموقع القهوة</a>
+        
+        <form action="{% url 'logout' %}" method="post" style="display: inline; margin: 0;">
+            {% csrf_token %}
+            <button type="submit" style="background: #b71c1c; color: white; padding: 8px 15px; border: none; border-radius: 5px; font-size: 14px; cursor: pointer; font-family: Tahoma, sans-serif; transition: background 0.3s;">🚪 تسجيل خروج</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* توحيد لون الهيدر العلوي للوحة التحكم ليطابق هوية القهوة */
+    #header {
+        background-color: #5c4033 !important;
+        color: #f7f3f0 !important;
+    }
+    #header a:hover {
+        color: #c8ad7f !important;
+    }
+    /* تنسيق ألوان العناوين والأزرار داخل اللوحة لتتناسق مع الستايل العام */
+    div.breadcrumbs {
+        background-color: #6f4e37 !important;
+        color: #f7f3f0 !important;
+    }
+    div.breadcrumbs a {
+        color: #c8ad7f !important;
+    }
+</style>
+{% endblock %}

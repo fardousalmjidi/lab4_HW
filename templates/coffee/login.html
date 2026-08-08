@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}تسجيل الدخول - نظام القهوة{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right;">
+    <h2 style="color: #5c4033; margin-bottom: 20px; text-align: center;">🔐 تسجيل الدخول</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #5c4033; font-weight: bold;">اسم المستخدم:</label>
+            {{ form.username }}
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; color: #5c4033; font-weight: bold;">كلمة المرور:</label>
+            {{ form.password }}
+        </div>
+
+        {% if form.errors %}
+            <p style="color: #b71c1c; font-size: 13px; margin-bottom: 15px; text-align: center;">خطأ في اسم المستخدم أو كلمة المرور، يرجى المحاولة مرة أخرى.</p>
+        {% endif %}
+
+        <button type="submit" style="width: 100%; padding: 12px; background-color: #6f4e37; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-family: Tahoma, sans-serif; transition: background 0.3s;">دخول</button>
+    </form>
+</div>
+
+<!-- تنسيق حقول الإدخال التلقائية الخاصة بنموذج جانجو -->
+<style>
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d7ccc8;
+        border-radius: 6px;
+        outline: none;
+        font-family: Tahoma, sans-serif;
+        box-sizing: border-box;
+    }
+    input[type="text"]:focus, input[type="password"]:focus {
+        border-color: #6f4e37;
+    }
+</style>
+{% endblock %}
