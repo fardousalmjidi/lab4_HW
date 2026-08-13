@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}عربة التسوق - نظام القهوة{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right;">
+    <h2 style="color: #5c4033; margin-bottom: 10px;">🛒 عربة التسوق</h2>
+    <hr style="border: 0; border-top: 1px solid #d7ccc8; margin-bottom: 20px;">
+
+    {% if order and order.items.all %}
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+            <thead>
+                <tr style="background-color: #f5f2ef; color: #5c4033; text-align: right;">
+                    <th style="padding: 12px; border-bottom: 2px solid #d7ccc8;">الصنف</th>
+                    <th style="padding: 12px; border-bottom: 2px solid #d7ccc8;">الفرع</th>
+                    <th style="padding: 12px; border-bottom: 2px solid #d7ccc8;">السعر</th>
+                    <th style="padding: 12px; border-bottom: 2px solid #d7ccc8;">الكمية</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items.all %}
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid #eee; color: #333;">{{ item.coffee.name }}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #eee; color: #666;">{{ item.coffee.branch_name }}</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #eee; color: #6f4e37; font-weight: bold;">{{ item.coffee.price }} ر.ي</td>
+                    <td style="padding: 12px; border-bottom: 1px solid #eee; color: #333;">{{ item.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+            <a href="{% url 'checkout' %}" style="padding: 10px 25px; background-color: #2e7d32; color: white; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: bold;">إتمام الشراء (Checkout)</a>
+            <a href="{% url 'coffee_list' %}" style="padding: 10px 20px; background-color: #6f4e37; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">متابعة التسوق</a>
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 30px; color: #666;">
+            <p style="font-size: 16px; margin-bottom: 20px;">عربة التسوق الخاصة بك فارغة حالياً.</p>
+            <a href="{% url 'coffee_list' %}" style="padding: 10px 20px; background-color: #6f4e37; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">تصفح أصناف القهوة</a>
+        </div>
+    {% endif %}
+    
+    <div style="margin-top: 25px; text-align: left;">
+        <a href="{% url 'dashboard' %}" style="color: #8B4513; text-decoration: none; font-size: 14px;">العودة لوحة التحكم</a>
+    </div>
+</div>
+{% endblock %}

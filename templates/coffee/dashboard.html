@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}لوحة التحكم - نظام القهوة{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right;">
+    <h2 style="color: #5c4033; margin-bottom: 10px;">☕ لوحة تحكم المستخدم</h2>
+    <hr style="border: 0; border-top: 1px solid #d7ccc8; margin-bottom: 20px;">
+    
+    <div style="background-color: #f5f2ef; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+        <p style="font-size: 16px; color: #333; margin: 0;">مرحباً بك، <strong>{{ request.user.username }}</strong>!</p>
+        <p style="font-size: 14px; color: #666; margin-top: 5px;">البريد الإلكتروني: {{ request.user.email }}</p>
+        {% if request.user.is_staff %}
+            <p style="font-size: 13px; color: #2e7d32; margin-top: 5px; font-weight: bold;">صلاحية الحساب: مشرف (Admin)</p>
+        {% endif %}
+    </div>
+
+    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+        <a href="{% url 'coffee_list' %}" style="padding: 10px 20px; background-color: #6f4e37; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">تصفح قائمة القهوة</a>
+        <a href="{% url 'view_cart' %}" style="padding: 10px 20px; background-color: #8B4513; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">عربة التسوق</a>
+        
+        {% if request.user.is_staff %}
+            <a href="{% url 'add_user' %}" style="padding: 10px 20px; background-color: #2e7d32; color: white; text-decoration: none; border-radius: 6px; font-size: 14px;">إضافة مستخدم جديد</a>
+        {% endif %}
+        
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="padding: 10px 20px; background-color: #b71c1c; color: white; border: none; border-radius: 6px; font-size: 14px; cursor: pointer;">تسجيل الخروج</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

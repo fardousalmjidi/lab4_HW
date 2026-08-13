@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}إضافة مستخدم جديد - لوحة الأدمن{% endblock %}
+
+{% block content %}
+<div style="max-width: 450px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: right;">
+    <h2 style="color: #5c4033; margin-bottom: 20px; text-align: center;">👤 إضافة مستخدم جديد</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #5c4033; font-weight: bold;">اسم المستخدم:</label>
+            {{ form.username }}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #5c4033; font-weight: bold;">البريد الإلكتروني:</label>
+            {{ form.email }}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #5c4033; font-weight: bold;">كلمة المرور:</label>
+            {{ form.password1 }}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; color: #5c4033; font-weight: bold;">تأكيد كلمة المرور:</label>
+            {{ form.password2 }}
+        </div>
+
+        <div style="margin-bottom: 20px; display: flex; align-items: center;">
+            {{ form.is_staff_user }}
+            <label style="color: #5c4033; font-weight: bold; margin-right: 5px;">صلاحيات مشرف (Admin)</label>
+        </div>
+
+        {% if form.errors %}
+            <div style="color: #b71c1c; font-size: 13px; margin-bottom: 15px; text-align: center;">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+
+        <button type="submit" style="width: 100%; padding: 12px; background-color: #6f4e37; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer;">حفظ وإنشاء المستخدم</button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 15px;">
+        <a href="{% url 'dashboard' %}" style="color: #8B4513; text-decoration: none; font-size: 14px;">العودة لوحة التحكم</a>
+    </div>
+</div>
+
+<style>
+    input[type="text"], input[type="password"], input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d7ccc8;
+        border-radius: 6px;
+        outline: none;
+        box-sizing: border-box;
+    }
+</style>
+{% endblock %}

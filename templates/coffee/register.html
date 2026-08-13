@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
-from .forms import CustomUserCreationForm, AdminUserCreationForm
-from .models import CoffeeItem, Order, OrderItem
+from .forms import CustomUserCreationForm
+from .models import CoffeeItem, Order, OrderItem, get_object_or_404 # assuming get_object_or_404 is imported or handled
 
 def register_view(request):
     if request.method == 'POST':
@@ -20,17 +19,6 @@ def register_view(request):
 def dashboard_view(request):
     return render(request, 'coffee/dashboard.html')
 
-@staff_member_required
-def add_user_view(request):
-    if request.method == 'POST':
-        form = AdminUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-    else:
-        form = AdminUserCreationForm()
-    return render(request, 'coffee/add_user.html', {'form': form})
-
 def coffee_list(request):
     query = request.GET.get('q', '')
     if query:
@@ -43,11 +31,7 @@ def add_to_cart(request, item_id):
     if not request.user.is_authenticated:
         return redirect('login')
     coffee = get_object_or_404(CoffeeItem, id=item_id)
-    
-    order = Order.objects.filter(user=request.user, is_completed=False).first()
-    if not order:
-        order = Order.objects.create(user=request.user, is_completed=False)
-        
+    order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
     order_item, created = OrderItem.objects.get_or_create(order=order, coffee=coffee)
     if not created:
         order_item.quantity += 1
@@ -57,16 +41,13 @@ def add_to_cart(request, item_id):
 def view_cart(request):
     if not request.user.is_authenticated:
         return redirect('login')
-        
-    order = Order.objects.filter(user=request.user, is_completed=False).first()
+    order, created = Order.objects.get_or_create(user=request.user, is_completed=False)
     return render(request, 'coffee/cart.html', {'order': order})
 
 def checkout(request):
     if not request.user.is_authenticated:
         return redirect('login')
-        
-    order = Order.objects.filter(user=request.user, is_completed=False).first()
-    if order:
-        order.is_completed = True
-        order.save()
+    order = get_object_or_404(Order, user=request.user, is_completed=False)
+    order.is_completed = True
+    order.save()
     return redirect('coffee_list')
