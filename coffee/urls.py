@@ -11,5 +11,11 @@ urlpatterns = [
     path('cart/add/<int:item_id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.view_cart, name='view_cart'),
     path('checkout/', views.checkout, name='checkout'),
-    path('add-user/', views.add_user_view, name='add_user'),
+    
+    # مسارات النماذج (Forms)
+    path('add-user/', views.add_user_view, name='add_user'),           # نموذج إدارة/إنشاء مستخدم أدمن
+    path('add-coffee/', views.add_coffee_view, name='add_coffee'),     # نموذج إضافة صنف قهوة
+    
+    path('queryset-demo/', views.queryset_demo_view, name='queryset_demo'),
+     path('all-forms/', views.all_forms_view, name='all_forms'), # مسار عرض دوال الـ QuerySet للتكليف
 ]

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);" dir="rtl">
+    <h2 style="color: #5c4033; margin-bottom: 20px; text-align: center; font-size: 20px;">{{ title }}</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit" style="background-color: #6f4e37; color: white; padding: 12px; border: none; border-radius: 6px; width: 100%; font-size: 16px; cursor: pointer; margin-top: 15px;">
+            حفظ البيانات
+        </button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 15px;">
+        <a href="{% url 'coffee_list' %}" style="color: #795548; text-decoration: none; font-size: 14px;">العودة إلى المتجر</a>
+    </div>
+</div>
+{% endblock %}

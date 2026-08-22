@@ -57,6 +57,11 @@
         <div class="navbar-links">
             <a href="{% url 'coffee_list' %}">🏠 الرئيسية</a>
             <a href="{% url 'view_cart' %}">🛒 عربة التسوق</a>
+            <a href="{% url 'queryset_demo' %}">📊 استعلامات النظام</a>
+            <a href="{% url 'add_coffee' %}">➕ إضافة قهوة</a>
+            <a href="{% url 'add_user' %}">👤 إضافة مستخدم</a>
+            <a href="{% url 'all_forms' %}">📋 نماذج النظام</a>
+            <a href="{% url 'admin:coffee_coffeeitem_changelist' %}">⚙️ إدارة وتعديل الأصناف</a>
             
             {% if user.is_authenticated %}
                 <a href="{% url 'dashboard' %}">⚙️ لوحة التحكم</a>

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 30px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);" dir="rtl">
+    <h2 style="color: #5c4033; margin-bottom: 30px; text-align: center; font-size: 24px; border-bottom: 2px solid #f7f3f0; padding-bottom: 15px;">📋 لوحة النماذج المتعددة</h2>
+    
+    <form method="POST">
+        {% csrf_token %>
+        
+        <!-- نموذج 1 -->
+        <fieldset style="border: 1px solid #d7ccc8; padding: 25px; margin-bottom: 25px; border-radius: 8px; background-color: #faf8f6;">
+            <legend style="color: #6f4e37; font-weight: bold; padding: 0 12px; font-size: 16px;">1. نموذج التسجيل العادي</legend>
+            <div class="form-group-custom">
+                {{ form1.as_p }}
+            </div>
+        </fieldset>
+
+        <!-- نموذج 2 -->
+        <fieldset style="border: 1px solid #d7ccc8; padding: 25px; margin-bottom: 25px; border-radius: 8px; background-color: #faf8f6;">
+            <legend style="color: #6f4e37; font-weight: bold; padding: 0 12px; font-size: 16px;">2. نموذج تسجيل الأدمن</legend>
+            <div class="form-group-custom">
+                {{ form2.as_p }}
+            </div>
+        </fieldset>
+
+        <!-- نموذج 3 -->
+        <fieldset style="border: 1px solid #d7ccc8; padding: 25px; margin-bottom: 25px; border-radius: 8px; background-color: #faf8f6;">
+            <legend style="color: #6f4e37; font-weight: bold; padding: 0 12px; font-size: 16px;">3. نموذج إضافة صنف قهوة</legend>
+            <div class="form-group-custom">
+                {{ form3.as_p }}
+            </div>
+        </fieldset>
+        
+        <button type="submit" style="background-color: #6f4e37; color: white; padding: 14px; border: none; border-radius: 8px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s;">
+            حفظ كافة النماذج
+        </button>
+    </form>
+</div>
+
+<style>
+    /* تنسيق عناصر النماذج لتبدو منظمة */
+    .form-group-custom p {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        text-align: right;
+    }
+    .form-group-custom label {
+        font-weight: bold;
+        color: #4e3629;
+        font-size: 14px;
+    }
+    .form-group-custom input[type="text"],
+    .form-group-custom input[type="password"],
+    .form-group-custom input[type="email"],
+    .form-group-custom input[type="number"],
+    .form-group-custom select,
+    .form-group-custom textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #bcaaa4;
+        border-radius: 6px;
+        font-family: Tahoma, sans-serif;
+        font-size: 14px;
+        background-color: #fff;
+        outline: none;
+    }
+    .form-group-custom input:focus {
+        border-color: #6f4e37;
+        box-shadow: 0 0 5px rgba(111, 78, 55, 0.2);
+    }
+    .form-group-custom span.helptext, 
+    .form-group-custom ul.errorlist,
+    .form-group-custom small {
+        font-size: 12px;
+        color: #795548;
+        line-height: 1.4;
+    }
+    .form-group-custom input[type="checkbox"] {
+        margin-left: 8px;
+    }
+    .form-group-custom p:has(input[type="checkbox"]) {
+        flex-direction: row;
+        align-items: center;
+    }
+</style>
+{% endblock %}
