@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,9 +29,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# =========================================================
 # Application definition
+# =========================================================
 
 INSTALLED_APPS = [
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,15 +53,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'coffee.middleware.CoffeeRequestLoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
 
-# الإعدادات الصحيحة والمكتملة للقوالب مع ربط المجلد الخارجي ومعالجات لوحة التحكم
+
+# =========================================================
+# Templates
+# =========================================================
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # ربط المجلد المركزي الخارجي للقوالب
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,8 +82,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+# =========================================================
 # Database
-# تم تعديل إعدادات قاعدة البيانات للعمل مع PostgreSQL
+# =========================================================
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -87,8 +98,9 @@ DATABASES = {
 }
 
 
-# Password validatio
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+# =========================================================
+# Password validation
+# =========================================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -97,7 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
@@ -107,8 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# =========================================================
 # Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
+# =========================================================
 
 LANGUAGE_CODE = 'en-us'
 
@@ -119,8 +131,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# =========================================================
+# Static files
+# =========================================================
 
 STATIC_URL = 'static/'
 
@@ -128,11 +141,46 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# Media files (Images uploaded by users/admin)
+
+# =========================================================
+# Media files
+# =========================================================
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+
+# =========================================================
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+# =========================================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# =========================================================
+# Login settings
+# =========================================================
+
+LOGIN_REDIRECT_URL = '/coffee/'
+
+
+# =========================================================
+# إعدادات البريد الإلكتروني الحقيقي عبر Gmail SMTP
+# =========================================================
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+# البريد الذي سيتم إرسال الرسائل منه
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+
+# App Password الخاصة بحساب Gmail
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+
+# البريد الافتراضي للمرسل
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

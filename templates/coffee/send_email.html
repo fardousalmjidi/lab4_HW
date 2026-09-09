@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+
+{% block title %}إرسال بريد إلكتروني - نظام القهوة{% endblock %}
+
+{% block content %}
+
+<div style="
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    text-align: right;
+">
+
+    <!-- ================================================= -->
+    <!-- عنوان الصفحة -->
+    <!-- ================================================= -->
+
+    <h2 style="
+        color: #5c4033;
+        margin-bottom: 10px;
+        text-align: center;
+    ">
+        📧 إرسال بريد إلكتروني
+    </h2>
+
+
+    <p style="
+        text-align: center;
+        color: #777;
+        margin-bottom: 30px;
+    ">
+        إرسال رسالة حقيقية إلى البريد الإلكتروني للمستلم
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- رسالة النجاح -->
+    <!-- ================================================= -->
+
+    {% if success %}
+
+        <div style="
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        ">
+
+            ✅ تم إرسال الرسالة بنجاح!
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ================================================= -->
+    <!-- رسالة الخطأ -->
+    <!-- ================================================= -->
+
+    {% if error %}
+
+        <div style="
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        ">
+
+            <strong>
+                ❌ فشل إرسال الرسالة
+            </strong>
+
+            <br>
+
+            {{ error }}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ================================================= -->
+    <!-- نموذج البريد -->
+    <!-- ================================================= -->
+
+    <form method="post">
+
+        {% csrf_token %}
+
+
+        <!-- البريد -->
+
+        <div style="margin-bottom: 22px;">
+
+            <label style="
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #5c4033;
+            ">
+
+                البريد الإلكتروني للمستلم
+
+            </label>
+
+            {{ form.recipient }}
+
+            {% if form.recipient.errors %}
+
+                <div style="
+                    color: #c62828;
+                    margin-top: 6px;
+                ">
+
+                    {{ form.recipient.errors }}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- العنوان -->
+
+        <div style="margin-bottom: 22px;">
+
+            <label style="
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #5c4033;
+            ">
+
+                عنوان الرسالة
+
+            </label>
+
+            {{ form.subject }}
+
+            {% if form.subject.errors %}
+
+                <div style="
+                    color: #c62828;
+                    margin-top: 6px;
+                ">
+
+                    {{ form.subject.errors }}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- محتوى الرسالة -->
+
+        <div style="margin-bottom: 25px;">
+
+            <label style="
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #5c4033;
+            ">
+
+                محتوى الرسالة
+
+            </label>
+
+            {{ form.message }}
+
+            {% if form.message.errors %}
+
+                <div style="
+                    color: #c62828;
+                    margin-top: 6px;
+                ">
+
+                    {{ form.message.errors }}
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- الأزرار -->
+        <!-- ================================================= -->
+
+        <div style="
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        ">
+
+            <button
+                type="submit"
+                style="
+                    padding: 12px 30px;
+                    background-color: #6f4e37;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-family: Tahoma, sans-serif;
+                    font-size: 15px;
+                "
+            >
+
+                📤 إرسال الرسالة
+
+            </button>
+
+
+            <a
+                href="{% url 'dashboard' %}"
+                style="
+                    padding: 12px 30px;
+                    background-color: #8d6e63;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 6px;
+                    font-size: 15px;
+                "
+            >
+
+                ↩ العودة
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
