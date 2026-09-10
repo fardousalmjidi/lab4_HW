@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .validators import validate_coffee_price, validate_roast_level
 
 # علاقة واحد إلى واحد (One-to-One)
 class UserProfile(models.Model):
@@ -20,8 +21,8 @@ class Category(models.Model):
 class CoffeeItem(models.Model):
     name = models.CharField(max_length=100)
     branch_name = models.CharField(max_length=100)
-    roast_level = models.CharField(max_length=50)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    roast_level = models.CharField(max_length=50, validators=[validate_roast_level])
+    price = models.DecimalField(max_digits=8, decimal_places=2, validators=[validate_coffee_price])
     image = models.ImageField(upload_to='coffee_images/', blank=True, null=True)
     categories = models.ManyToManyField(Category, related_name='coffees', blank=True)
 
